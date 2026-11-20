@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DARK ROOM — Boutique Streetwear Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pure: '#FFFFFF',
+            warm: '#FAF8F5',
+            sand: '#EFECE6',
+            ink: '#141413',
+            pine: '#1F3A2E',
+            pineLight: '#2B4F3F',
+            wood: '#A67B5B',
+            woodDark: '#8C6239',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #FFFFFF;
+      color: #141413;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF8F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D6CFC5;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #A67B5B;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-pine selection:text-white">
+
+  <!-- Barra superior de anuncios -->
+  <div class="bg-pine text-white text-[11px] sm:text-xs text-center py-2 px-4 tracking-wide font-medium">
+    Envíos gratis desde $100 • Nueva colección: Suéteres, Camisas, Pantalones y Accesorios
+  </div>
+
+  <!-- Cabecera compacta móvil y escritorio -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-ink/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+      
+      <!-- Izquierda: Botón Menú Hamburguesa + Logo DARK ROOM -->
+      <div class="flex items-center gap-2.5 sm:gap-3.5">
+        <button
+          id="open-menu-btn"
+          type="button"
+          aria-label="Abrir menú"
+          onclick="setHamburgerMenu(true)"
+          class="p-2.5 -ml-2 rounded-full hover:bg-warm active:bg-sand text-ink transition-colors"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        <a href="#home" class="flex items-center gap-2.5 group">
+          <span class="w-8 h-8 rounded-full bg-ink text-white font-display font-bold text-xs flex items-center justify-center tracking-tight group-hover:bg-pine transition-colors">
+            D/R
+          </span>
+          <div class="flex flex-col leading-none">
+            <span class="font-display font-bold text-base sm:text-lg tracking-wider text-ink">
+              DARK ROOM
+            </span>
+            <span class="text-[9px] font-semibold tracking-[0.2em] text-woodDark uppercase mt-0.5">
+              STREETWEAR
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Centro: Enlaces principales escritorio -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-ink/75">
+        <a href="#home" class="hover:text-pine transition-colors">Home</a>
+        <a href="#catalogo" class="hover:text-pine transition-colors">Catálogo</a>
+        <a href="#sobre-nosotros" class="hover:text-pine transition-colors">Sobre nosotros</a>
+      </nav>
+
+      <!-- Derecha: Buscador, Registrarse/Cuenta y Carrito -->
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button
+          id="toggle-search-btn"
+          type="button"
+          aria-label="Buscar prendas"
+          onclick="toggleTopSearch()"
+          class="p-2.5 rounded-full hover:bg-warm active:bg-sand text-ink transition-colors"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+          </svg>
+        </button>
+
+        <button
+          id="header-user-btn"
+          type="button"
+          aria-label="Registrarse o Mi Cuenta"
+          onclick="openAuthModal('register')"
+          class="flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-full bg-warm hover:bg-sand border border-ink/15 text-ink transition-colors"
+        >
+          <svg class="w-4 h-4 text-woodDark shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <span id="header-user-label" class="text-[11px] sm:text-xs font-semibold whitespace-nowrap">Registrarse</span>
+        </button>
+
+        <button
+          id="header-cart-btn"
+          type="button"
+          aria-label="Carrito"
+          onclick="setBagDrawer(true)"
+          class="relative flex items-center gap-1.5 p-2.5 sm:px-3.5 sm:py-2 rounded-full bg-warm hover:bg-sand border border-ink/15 text-ink transition-colors"
+        >
+          <svg class="w-5 h-5 text-pine" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span
+            id="cart-count"
+            class="min-w-[20px] h-5 px-1 rounded-full bg-pine text-white text-[11px] font-semibold flex items-center justify-center"
+          >
+            0
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de búsqueda desplegable -->
+    <div id="top-search-bar" class="hidden bg-warm border-t border-ink/10 px-4 py-3">
+      <div class="max-w-2xl mx-auto relative flex items-center">
+        <svg class="w-4 h-4 text-ink/45 absolute left-4 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+        </svg>
+        <input
+          id="top-search-input"
+          type="text"
+          placeholder="Buscar por prenda, color (verde pino, arena, negro) o talla..."
+          oninput="handleSearch(this.value)"
+          class="w-full pl-11 pr-10 py-2.5 rounded-full bg-white border border-ink/15 focus:border-pine text-sm text-ink placeholder:text-ink/45 outline-none transition-colors"
+        />
+        <button
+          type="button"
+          onclick="clearSearch()"
+          aria-label="Limpiar búsqueda"
+          class="absolute right-3.5 w-6 h-6 rounded-full hover:bg-sand text-xs text-ink/50 hover:text-ink flex items-center justify-center"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Panel lateral del Menú Hamburguesa -->
+  <div
+    id="menu-backdrop"
+    onclick="setHamburgerMenu(false)"
+    class="fixed inset-0 z-50 hidden bg-ink/45 backdrop-blur-xs transition-opacity"
+  ></div>
+  <aside
+    id="hamburger-drawer"
+    class="fixed top-0 left-0 z-50 h-full w-[84%] max-w-xs bg-white border-r border-ink/10 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between shadow-2xl"
+  >
+    <div class="p-5 space-y-6 overflow-y-auto">
+      <div class="flex items-center justify-between pb-4 border-b border-ink/10">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-full bg-pine text-white font-display font-bold text-xs flex items-center justify-center">D/R</span>
+          <div class="leading-none">
+            <span class="font-display font-bold text-base tracking-wider text-ink block">DARK ROOM</span>
+            <span class="text-[9px] font-semibold tracking-[0.2em] text-woodDark uppercase">STREETWEAR</span>
+          </div>
+        </div>
+        <button
+          type="button"
+          onclick="setHamburgerMenu(false)"
+          aria-label="Cerrar menú"
+          class="w-9 h-9 rounded-full bg-warm hover:bg-sand border border-ink/10 flex items-center justify-center text-ink text-xs"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Buscador rápido dentro del menú -->
+      <div class="relative flex items-center">
+        <svg class="w-4 h-4 text-ink/45 absolute left-3.5 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 115 11a6 6 0 0112 0z" />
+        </svg>
+        <input
+          id="drawer-search-input"
+          type="text"
+          placeholder="Buscar en la tienda..."
+          oninput="handleSearch(this.value)"
+          class="w-full pl-10 pr-8 py-2.5 rounded-full bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink placeholder:text-ink/45 outline-none"
+        />
+        <button
+          type="button"
+          onclick="clearSearch()"
+          class="absolute right-3 text-xs text-ink/45 hover:text-ink"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Enlaces principales ordenados -->
+      <div class="space-y-1">
+        <p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-woodDark">Navegación</p>
+        <a
+          href="#home"
+          onclick="setHamburgerMenu(false)"
+          class="flex items-center justify-between px-3 py-3 rounded-2xl text-base font-medium text-ink hover:bg-warm active:bg-sand transition-colors"
+        >
+          <span>Home</span>
+          <span class="text-ink/35 text-sm">→</span>
+        </a>
+        <a
+          href="#catalogo"
+          onclick="setHamburgerMenu(false)"
+          class="flex items-center justify-between px-3 py-3 rounded-2xl text-base font-medium text-ink hover:bg-warm active:bg-sand transition-colors"
+        >
+          <span>Catálogo</span>
+          <span class="text-ink/35 text-sm">→</span>
+        </a>
+        <a
+          href="#sobre-nosotros"
+          onclick="setHamburgerMenu(false)"
+          class="flex items-center justify-between px-3 py-3 rounded-2xl text-base font-medium text-ink hover:bg-warm active:bg-sand transition-colors"
+        >
+          <span>Sobre nosotros</span>
+          <span class="text-ink/35 text-sm">→</span>
+        </a>
+      </div>
+
+      <!-- Accesos directos a categorías -->
+      <div class="space-y-1.5 pt-2 border-t border-ink/10">
+        <p class="px-3 text-[11px] font-semibold uppercase tracking-wider text-woodDark">Categorías</p>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button
+            type="button"
+            onclick="selectCategoryFromMenu('sueteres')"
+            class="px-3.5 py-2.5 rounded-2xl bg-warm hover:bg-pine hover:text-white text-left text-xs font-medium text-ink transition-colors"
+          >
+            Suéteres
+          </button>
+          <button
+            type="button"
+            onclick="selectCategoryFromMenu('camisas')"
+            class="px-3.5 py-2.5 rounded-2xl bg-warm hover:bg-pine hover:text-white text-left text-xs font-medium text-ink transition-colors"
+          >
+            Camisas
+          </button>
+          <button
+            type="button"
+            onclick="selectCategoryFromMenu('pantalones')"
+            class="px-3.5 py-2.5 rounded-2xl bg-warm hover:bg-pine hover:text-white text-left text-xs font-medium text-ink transition-colors"
+          >
+            Pantalones
+          </button>
+          <button
+            type="button"
+            onclick="selectCategoryFromMenu('accesorios')"
+            class="px-3.5 py-2.5 rounded-2xl bg-warm hover:bg-pine hover:text-white text-left text-xs font-medium text-ink transition-colors"
+          >
+            Accesorios
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de cuenta abajo en menú -->
+    <div class="p-5 border-t border-ink/10 bg-warm space-y-2.5">
+      <div id="drawer-user-info" class="hidden px-2 pb-1">
+        <p class="text-[11px] text-pine font-semibold">Miembro activo</p>
+        <p id="drawer-user-name" class="text-sm font-bold text-ink truncate">Usuario</p>
+      </div>
+      <button
+        id="drawer-auth-btn"
+        type="button"
+        onclick="setHamburgerMenu(false); openAuthModal('register');"
+        class="w-full py-3.5 px-4 rounded-full bg-pine hover:bg-pineLight text-white text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 transition-colors shadow-sm"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+        <span id="drawer-auth-label">Crear cuenta / Iniciar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- 1. Hero Editorial Luminoso -->
+  <section id="home" class="bg-warm border-b border-ink/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <div class="lg:col-span-6 space-y-5 sm:space-y-6 order-2 lg:order-1">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-wood/30 text-woodDark text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-pine"></span>
+            Colección Esencial • 2026
+          </span>
+
+          <h1 class="font-display font-bold text-3xl sm:text-5xl lg:text-[54px] text-ink leading-[1.1] tracking-tight">
+            Siluetas limpias y tonos tierra para cada día.
+          </h1>
+
+          <p class="text-ink/70 text-sm sm:text-base max-w-lg leading-relaxed">
+            Prendas urbanas pensadas para sentirse cómodas desde el primer uso. Explora cada pieza en múltiples colores y tallas desde XS hasta XL.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <a
+              href="#catalogo"
+              class="w-full sm:w-auto text-center px-7 py-3.5 rounded-full bg-pine hover:bg-pineLight text-white text-sm font-semibold transition-all shadow-sm active:scale-95"
+            >
+              Explorar colección
+            </a>
+            <button
+              type="button"
+              onclick="openAuthModal('register')"
+              class="w-full sm:w-auto text-center px-7 py-3.5 rounded-full bg-white hover:bg-sand border border-ink/15 text-ink text-sm font-medium transition-colors"
+            >
+              Crear cuenta gratis
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 order-1 lg:order-2">
+          <div class="relative rounded-3xl overflow-hidden bg-sand border border-wood/25 aspect-[4/3] sm:aspect-[16/11] shadow-sm">
+            <img
+              src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1200&q=80"
+              alt="Perchero con prendas seleccionadas DARK ROOM"
+              onerror="this.src='https://placehold.co/900x700/EFECE6/141413?text=DARK+ROOM+COLECCION'"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute bottom-4 left-4 right-4 sm:right-auto bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl border border-wood/20 shadow-xs">
+              <p class="text-[11px] font-semibold uppercase tracking-wider text-pine">DARK ROOM STUDIO</p>
+              <p class="text-xs text-ink/75 mt-0.5">Variedad de colores y tallas XS a XL • Cortes unisex</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Catálogo Interactivo -->
+  <section id="catalogo" class="py-12 sm:py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 mb-8 sm:mb-10">
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wider text-woodDark">Tienda Oficial</span>
+          <h2 class="font-display font-bold text-2xl sm:text-4xl text-ink tracking-tight mt-1">
+            Catálogo
+          </h2>
+          <p id="catalog-subtitle" class="text-ink/60 text-xs sm:text-sm mt-1">
+            Selecciona el color y la talla de cada prenda antes de añadirla a tu carrito.
+          </p>
+        </div>
+
+        <!-- Pestañas de Categoría -->
+        <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+          <button
+            type="button"
+            data-category="all"
+            onclick="filterCatalog('all')"
+            class="cat-pill shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-pine text-white transition-all"
+          >
+            Todo
+          </button>
+          <button
+            type="button"
+            data-category="sueteres"
+            onclick="filterCatalog('sueteres')"
+            class="cat-pill shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-warm hover:bg-sand text-ink border border-ink/10 transition-all"
+          >
+            Suéteres
+          </button>
+          <button
+            type="button"
+            data-category="camisas"
+            onclick="filterCatalog('camisas')"
+            class="cat-pill shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-warm hover:bg-sand text-ink border border-ink/10 transition-all"
+          >
+            Camisas
+          </button>
+          <button
+            type="button"
+            data-category="pantalones"
+            onclick="filterCatalog('pantalones')"
+            class="cat-pill shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-warm hover:bg-sand text-ink border border-ink/10 transition-all"
+          >
+            Pantalones
+          </button>
+          <button
+            type="button"
+            data-category="accesorios"
+            onclick="filterCatalog('accesorios')"
+            class="cat-pill shrink-0 px-5 py-2.5 rounded-full text-xs sm:text-sm font-medium bg-warm hover:bg-sand text-ink border border-ink/10 transition-all"
+          >
+            Accesorios
+          </button>
+        </div>
+      </div>
+
+      <!-- Cuadrícula de Productos -->
+      <div id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-7">
+        <!-- Renderizado dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Sección Editorial "Sobre nosotros" -->
+  <section id="sobre-nosotros" class="bg-warm border-y border-wood/20 py-14 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <div class="lg:col-span-6 grid grid-cols-2 gap-3.5 sm:gap-5">
+          <div class="rounded-2xl overflow-hidden bg-sand border border-wood/20 aspect-[3/4]">
+            <img
+              src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80"
+              alt="Texturas suaves DARK ROOM"
+              onerror="this.src='https://placehold.co/600x800/EFECE6/141413?text=TEJIDOS+NOBLES'"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+          <div class="rounded-2xl overflow-hidden bg-sand border border-wood/20 aspect-[3/4] mt-5 sm:mt-8">
+            <img
+              src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80"
+              alt="Diseño urbano DARK ROOM"
+              onerror="this.src='https://placehold.co/600x800/1F3A2E/FFFFFF?text=DARK+ROOM'"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 rounded-3xl bg-white border border-wood/25 p-7 sm:p-10 shadow-xs space-y-5">
+          <span class="inline-block px-3.5 py-1 rounded-full bg-pine/10 text-pine text-xs font-semibold">
+            Sobre nosotros
+          </span>
+          <h3 class="font-display font-bold text-2xl sm:text-3xl text-ink leading-tight">
+            Diseño honesto, materiales nobles y calma visual.
+          </h3>
+          <p class="text-ink/70 text-sm sm:text-base leading-relaxed">
+            <strong class="text-ink">DARK ROOM</strong> nació con una idea simple: crear ropa urbana que no necesite logos gigantes para destacar. Inspirados en la fotografía analógica y los espacios cálidos, diseñamos prendas versátiles en tonos naturales que combinan fácilmente entre sí.
+          </p>
+          <p class="text-ink/70 text-sm leading-relaxed">
+            Cada suéter, camisa, pantalón y accesorio está confeccionado en lotes pequeños con algodón peinado, lino lavado y tejidos resistentes hechos para acompañarte temporada tras temporada.
+          </p>
+
+          <div class="grid grid-cols-2 gap-3.5 pt-3 border-t border-ink/10">
+            <div class="p-4 rounded-2xl bg-warm border border-wood/15">
+              <p class="font-display font-bold text-lg sm:text-xl text-pine">Materiales</p>
+              <p class="text-xs text-ink/65 mt-0.5">Algodón suave de alto gramaje y lino natural</p>
+            </div>
+            <div class="p-4 rounded-2xl bg-warm border border-wood/15">
+              <p class="font-display font-bold text-lg sm:text-xl text-woodDark">Tallas XS – XL</p>
+              <p class="text-xs text-ink/65 mt-0.5">Siluetas unisex cómodas en 3 colores por modelo</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Pie de página minimalista -->
+  <footer class="bg-white py-10 sm:py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-2.5">
+        <span class="w-8 h-8 rounded-full bg-pine text-white font-display font-bold text-xs flex items-center justify-center">D/R</span>
+        <span class="font-display font-bold text-base tracking-wider text-ink">DARK ROOM</span>
+        <span class="text-xs text-ink/50">© 2026</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm text-ink/65">
+        <a href="#home" class="hover:text-pine transition-colors">Home</a>
+        <a href="#catalogo" class="hover:text-pine transition-colors">Catálogo</a>
+        <a href="#sobre-nosotros" class="hover:text-pine transition-colors">Sobre nosotros</a>
+        <button type="button" onclick="openAuthModal('register')" class="hover:text-pine transition-colors">Mi cuenta</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal Vista Rápida del Producto -->
+  <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-ink/50 backdrop-blur-xs">
+    <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl bg-white border border-wood/25 shadow-2xl">
+      <button
+        type="button"
+        onclick="closeProductModal()"
+        aria-label="Cerrar detalle"
+        class="absolute top-3.5 right-3.5 z-10 w-9 h-9 rounded-full bg-white/95 border border-ink/10 flex items-center justify-center text-ink hover:bg-warm text-xs shadow-xs"
+      >
+        ✕
+      </button>
+      <div id="product-modal-body" class="grid grid-cols-1 md:grid-cols-2">
+        <!-- Inyectado dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Carrito Lateral Desplegable -->
+  <div
+    id="bag-backdrop"
+    onclick="setBagDrawer(false)"
+    class="fixed inset-0 z-50 hidden bg-ink/45 backdrop-blur-xs"
+  ></div>
+  <aside
+    id="bag-drawer"
+    class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-white border-l border-ink/10 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl"
+  >
+    <div class="p-5 sm:p-6 border-b border-ink/10 flex items-center justify-between bg-warm">
+      <div>
+        <h3 class="font-display font-bold text-lg text-ink">Tu Carrito</h3>
+        <p class="text-xs text-ink/60">Revisa tus prendas antes de pasar a pagar</p>
+      </div>
+      <button
+        type="button"
+        onclick="setBagDrawer(false)"
+        aria-label="Cerrar carrito"
+        class="w-9 h-9 rounded-full bg-white border border-ink/10 flex items-center justify-center text-ink hover:bg-sand text-xs"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div id="bag-items" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-3.5">
+      <!-- Items dinámicos -->
+    </div>
+
+    <div class="p-5 sm:p-6 border-t border-ink/10 bg-warm space-y-3.5">
+      <div class="space-y-1.5">
+        <p id="shipping-status" class="text-xs font-medium text-pine">
+          Agrega $100.00 más para obtener envío gratis
+        </p>
+        <div class="w-full h-1.5 rounded-full bg-sand overflow-hidden">
+          <div id="shipping-bar" class="h-full bg-pine transition-all duration-300" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-xs text-ink/65 pt-1">
+        <span>Subtotal</span>
+        <span id="bag-subtotal">$0.00</span>
+      </div>
+      <div class="flex items-center justify-between text-xs text-ink/65">
+        <span>Envío estimado</span>
+        <span id="bag-shipping">$0.00</span>
+      </div>
+      <div class="flex items-center justify-between pt-2 border-t border-ink/10">
+        <span class="text-sm font-semibold text-ink">Total</span>
+        <span id="bag-total" class="font-display font-bold text-xl text-ink">$0.00</span>
+      </div>
+
+      <button
+        id="checkout-btn"
+        type="button"
+        onclick="openCheckoutModal()"
+        class="w-full py-3.5 rounded-full bg-pine hover:bg-pineLight disabled:opacity-40 disabled:pointer-events-none text-white text-sm font-semibold transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2"
+      >
+        <span>Finalizar Compra</span>
+        <span>→</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Pasarela de Pago Completa en 3 Pasos -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-2 sm:p-4 bg-ink/60 backdrop-blur-xs">
+    <div class="relative w-full max-w-4xl max-h-[94vh] overflow-y-auto rounded-3xl bg-white border border-wood/30 shadow-2xl flex flex-col">
+      
+      <div class="sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-ink/10 px-5 sm:px-8 py-4 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-full bg-pine text-white font-display font-bold text-xs flex items-center justify-center">D/R</span>
+          <div>
+            <h3 class="font-display font-bold text-base sm:text-lg text-ink leading-none">Pasarela de Pago Segura</h3>
+            <p class="text-[11px] text-ink/55 mt-0.5">DARK ROOM • Compra protegida</p>
+          </div>
+        </div>
+
+        <div class="hidden sm:flex items-center gap-2 text-xs font-semibold">
+          <span id="step-pill-1" class="px-3.5 py-1.5 rounded-full bg-pine text-white">1. Envío</span>
+          <span class="text-ink/30">→</span>
+          <span id="step-pill-2" class="px-3.5 py-1.5 rounded-full bg-warm text-ink/55 border border-ink/10">2. Pago</span>
+          <span class="text-ink/30">→</span>
+          <span id="step-pill-3" class="px-3.5 py-1.5 rounded-full bg-warm text-ink/55 border border-ink/10">3. Recibo</span>
+        </div>
+
+        <button
+          type="button"
+          onclick="closeCheckoutModal()"
+          aria-label="Cerrar pasarela"
+          class="w-9 h-9 rounded-full bg-warm hover:bg-sand border border-ink/10 flex items-center justify-center text-ink text-xs"
+        >
+          ✕
+        </button>
+      </div>
+
+      <div class="sm:hidden grid grid-cols-3 bg-warm border-b border-ink/10 text-[11px] font-semibold text-center">
+        <div id="mob-step-1" class="py-2 bg-pine text-white">1. Envío</div>
+        <div id="mob-step-2" class="py-2 text-ink/55">2. Pago</div>
+        <div id="mob-step-3" class="py-2 text-ink/55">3. Recibo</div>
+      </div>
+
+      <div id="checkout-main-grid" class="grid grid-cols-1 lg:grid-cols-12">
+        <div class="lg:col-span-7 p-5 sm:p-8 space-y-6">
+          
+          <!-- PASO 1: DATOS DE ENVÍO -->
+          <form id="checkout-step-1" onsubmit="goToPaymentStep(event)" class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-woodDark">Paso 1 de 2</span>
+                <h4 class="font-display font-bold text-xl text-ink">Datos de Envío</h4>
+              </div>
+              <button
+                id="checkout-quick-login-btn"
+                type="button"
+                onclick="openAuthModal('login')"
+                class="text-xs font-semibold text-pine hover:underline"
+              >
+                ¿Ya tienes cuenta? Inicia sesión
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-medium text-ink/75 mb-1">Nombre completo *</label>
+                <input
+                  id="ship-name"
+                  type="text"
+                  required
+                  placeholder="Ej. Camila Rojas"
+                  class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-ink/75 mb-1">Correo electrónico *</label>
+                <input
+                  id="ship-email"
+                  type="email"
+                  required
+                  placeholder="camila@correo.com"
+                  class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-ink/75 mb-1">Teléfono / WhatsApp *</label>
+                <input
+                  id="ship-phone"
+                  type="tel"
+                  required
+                  placeholder="+58 412 000 0000"
+                  class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-ink/75 mb-1">Ciudad / Estado *</label>
+                <input
+                  id="ship-city"
+                  type="text"
+                  required
+                  placeholder="Ej. Caracas, Distrito Capital"
+                  class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-ink/75 mb-1">Código Postal / Zona</label>
+                <input
+                  id="ship-zip"
+                  type="text"
+                  placeholder="Ej. 1060 / Chacao"
+                  class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-medium text-ink/75 mb-1">Dirección exacta de entrega *</label>
+                <input
+                  id="ship-address"
+                  type="text"
+                  required
+                  placeholder="Av. Principal, Edificio / Casa, Punto de referencia"
+                  class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                />
+              </div>
+            </div>
+
+            <div id="guest-register-box" class="p-4 rounded-2xl bg-warm border border-wood/25 space-y-3">
+              <label class="flex items-center gap-2.5 cursor-pointer select-none">
+                <input
+                  id="ship-create-account"
+                  type="checkbox"
+                  onchange="toggleInlinePasswordField(this.checked)"
+                  class="w-4 h-4 rounded accent-pine"
+                />
+                <span class="text-xs font-semibold text-ink">
+                  Crear mi cuenta DARK ROOM con estos datos para guardar mis pedidos
+                </span>
+              </label>
+              <div id="inline-password-box" class="hidden pt-1">
+                <label class="block text-xs font-medium text-ink/75 mb-1">Crea una contraseña (mín. 6 caracteres) *</label>
+                <input
+                  id="ship-password"
+                  type="password"
+                  minlength="6"
+                  placeholder="••••••••"
+                  class="w-full px-4 py-2.5 rounded-2xl bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full py-3.5 rounded-full bg-pine hover:bg-pineLight text-white text-sm font-semibold transition-all shadow-sm active:scale-95"
+            >
+              Continuar al Método de Pago →
+            </button>
+          </form>
+
+          <!-- PASO 2: MÉTODOS DE PAGO -->
+          <div id="checkout-step-2" class="hidden space-y-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-[11px] font-semibold uppercase tracking-wider text-woodDark">Paso 2 de 2</span>
+                <h4 class="font-display font-bold text-xl text-ink">Método de Pago</h4>
+              </div>
+              <button
+                type="button"
+                onclick="backToShippingStep()"
+                class="text-xs font-semibold text-ink/65 hover:text-pine"
+              >
+                ← Editar envío
+              </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                data-pay="card"
+                onclick="selectPaymentMethod('card')"
+                class="pay-tab py-3 px-2 rounded-2xl bg-pine text-white text-xs font-semibold border border-pine flex flex-col items-center gap-1 transition-all"
+              >
+                <span>💳</span>
+                <span>Tarjeta</span>
+              </button>
+              <button
+                type="button"
+                data-pay="pagomovil"
+                onclick="selectPaymentMethod('pagomovil')"
+                class="pay-tab py-3 px-2 rounded-2xl bg-warm hover:bg-sand text-ink text-xs font-semibold border border-ink/10 flex flex-col items-center gap-1 transition-all"
+              >
+                <span>📲</span>
+                <span>Pago Móvil / Transf.</span>
+              </button>
+              <button
+                type="button"
+                data-pay="zelle"
+                onclick="selectPaymentMethod('zelle')"
+                class="pay-tab py-3 px-2 rounded-2xl bg-warm hover:bg-sand text-ink text-xs font-semibold border border-ink/10 flex flex-col items-center gap-1 transition-all"
+              >
+                <span>⚡</span>
+                <span>Zelle / PayPal</span>
+              </button>
+            </div>
+
+            <!-- Tarjeta Crédito / Débito -->
+            <form id="pay-form-card" onsubmit="processFinalPayment(event)" class="space-y-4">
+              <div class="rounded-2xl bg-gradient-to-br from-ink via-pine to-pineLight text-white p-5 sm:p-6 shadow-md space-y-5 relative overflow-hidden">
+                <div class="flex items-center justify-between">
+                  <span class="font-display font-bold text-xs tracking-widest uppercase text-white/80">DARK ROOM PAY</span>
+                  <span class="px-2.5 py-0.5 rounded-full bg-white/15 text-[10px] font-semibold">CRÉDITO / DÉBITO</span>
+                </div>
+                <p id="card-preview-number" class="font-display text-lg sm:text-xl tracking-[0.18em] font-semibold">
+                  •••• •••• •••• ••••
+                </p>
+                <div class="flex items-end justify-between text-xs">
+                  <div>
+                    <p class="text-[9px] uppercase text-white/60">Titular</p>
+                    <p id="card-preview-name" class="font-semibold uppercase tracking-wide mt-0.5">TU NOMBRE AQUÍ</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-[9px] uppercase text-white/60">Vence</p>
+                    <p id="card-preview-exp" class="font-semibold mt-0.5">MM/AA</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-xs font-medium text-ink/75 mb-1">Número de tarjeta *</label>
+                  <input
+                    id="card-number"
+                    type="text"
+                    required
+                    maxlength="19"
+                    placeholder="4532 8910 2345 6789"
+                    oninput="formatCardNumber(this)"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none font-mono"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-ink/75 mb-1">Nombre en la tarjeta *</label>
+                  <input
+                    id="card-holder"
+                    type="text"
+                    required
+                    placeholder="Como aparece en el plástico"
+                    oninput="updateCardPreviewName(this.value)"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                  />
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                  <div>
+                    <label class="block text-xs font-medium text-ink/75 mb-1">Fecha MM/AA *</label>
+                    <input
+                      id="card-exp"
+                      type="text"
+                      required
+                      maxlength="5"
+                      placeholder="09/29"
+                      oninput="formatCardExp(this)"
+                      class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium text-ink/75 mb-1">Código CVV *</label>
+                    <input
+                      id="card-cvv"
+                      type="password"
+                      required
+                      maxlength="4"
+                      placeholder="123"
+                      class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none font-mono"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full py-3.5 rounded-full bg-pine hover:bg-pineLight text-white text-sm font-semibold transition-all shadow-sm active:scale-95"
+              >
+                Pagar Ahora • <span class="checkout-pay-amount">$0.00</span>
+              </button>
+            </form>
+
+            <!-- Pago Móvil / Transferencia -->
+            <form id="pay-form-pagomovil" onsubmit="processFinalPayment(event)" class="hidden space-y-4">
+              <div class="p-4 sm:p-5 rounded-2xl bg-warm border border-wood/30 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold uppercase tracking-wider text-pine">Datos Pago Móvil / Cuenta</span>
+                  <button
+                    type="button"
+                    onclick="copyTextToClipboard('0102 0412-5550199 J-50482910-4', 'Datos de Pago Móvil copiados')"
+                    class="px-3 py-1 rounded-full bg-white hover:bg-sand border border-ink/15 text-[11px] font-semibold text-ink transition-colors"
+                  >
+                    📋 Copiar datos
+                  </button>
+                </div>
+                <div class="grid grid-cols-2 gap-2.5 text-xs">
+                  <div class="p-2.5 rounded-xl bg-white border border-ink/5">
+                    <span class="text-ink/55 block text-[10px]">Banco</span>
+                    <strong class="text-ink">Banesco / Venezuela (0102)</strong>
+                  </div>
+                  <div class="p-2.5 rounded-xl bg-white border border-ink/5">
+                    <span class="text-ink/55 block text-[10px]">Teléfono</span>
+                    <strong class="text-ink">0412-5550199</strong>
+                  </div>
+                  <div class="p-2.5 rounded-xl bg-white border border-ink/5">
+                    <span class="text-ink/55 block text-[10px]">RIF Comercio</span>
+                    <strong class="text-ink">J-50482910-4</strong>
+                  </div>
+                  <div class="p-2.5 rounded-xl bg-white border border-ink/5">
+                    <span class="text-ink/55 block text-[10px]">Titular</span>
+                    <strong class="text-ink">DARK ROOM STUDIO C.A.</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-xs font-medium text-ink/75 mb-1">Banco desde donde transferiste *</label>
+                  <input
+                    id="pm-bank"
+                    type="text"
+                    required
+                    placeholder="Ej. Banesco, Mercantil, Provincial, BDV"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-ink/75 mb-1">Número de referencia (últimos 6 dígitos) *</label>
+                  <input
+                    id="pm-ref"
+                    type="text"
+                    required
+                    minlength="4"
+                    placeholder="Ej. 849201"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none font-mono"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full py-3.5 rounded-full bg-pine hover:bg-pineLight text-white text-sm font-semibold transition-all shadow-sm active:scale-95"
+              >
+                Pagar Ahora • <span class="checkout-pay-amount">$0.00</span>
+              </button>
+            </form>
+
+            <!-- Zelle / PayPal -->
+            <form id="pay-form-zelle" onsubmit="processFinalPayment(event)" class="hidden space-y-4">
+              <div class="p-4 sm:p-5 rounded-2xl bg-warm border border-wood/30 space-y-3">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold uppercase tracking-wider text-pine">Cuenta Zelle & PayPal Oficial</span>
+                  <button
+                    type="button"
+                    onclick="copyTextToClipboard('pagos@darkroomstreetwear.com', 'Correo de pago copiado')"
+                    class="px-3 py-1 rounded-full bg-white hover:bg-sand border border-ink/15 text-[11px] font-semibold text-ink transition-colors"
+                  >
+                    📋 Copiar correo
+                  </button>
+                </div>
+                <div class="p-3 rounded-xl bg-white border border-ink/10 flex items-center justify-between gap-2">
+                  <div>
+                    <p class="text-[11px] text-ink/55">Enviar pago a:</p>
+                    <p class="text-xs sm:text-sm font-bold text-ink">pagos@darkroomstreetwear.com</p>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-pine/10 text-pine text-[10px] font-semibold">DARK ROOM LLC</span>
+                </div>
+              </div>
+
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-xs font-medium text-ink/75 mb-1">Nombre o correo del titular que envía *</label>
+                  <input
+                    id="zelle-sender"
+                    type="text"
+                    required
+                    placeholder="Ej. Carlos Mendoza / carlos@gmail.com"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none"
+                  />
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-ink/75 mb-1">Código de confirmación / ID de transacción *</label>
+                  <input
+                    id="zelle-ref"
+                    type="text"
+                    required
+                    minlength="4"
+                    placeholder="Ej. ZL-9948120"
+                    class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none font-mono"
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="w-full py-3.5 rounded-full bg-pine hover:bg-pineLight text-white text-sm font-semibold transition-all shadow-sm active:scale-95"
+              >
+                Pagar Ahora • <span class="checkout-pay-amount">$0.00</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Animación de Procesamiento -->
+          <div id="checkout-processing" class="hidden py-14 text-center space-y-4">
+            <div class="w-14 h-14 rounded-full border-4 border-sand border-t-pine animate-spin mx-auto"></div>
+            <div class="space-y-1">
+              <h4 class="font-display font-bold text-xl text-ink">Procesando tu pago...</h4>
+              <p class="text-xs sm:text-sm text-ink/60">Verificando transacción y generando tu comprobante oficial DARK ROOM.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Columna Derecha: Resumen del Pedido -->
+        <div class="lg:col-span-5 bg-warm border-t lg:border-t-0 lg:border-l border-ink/10 p-5 sm:p-8 flex flex-col justify-between space-y-5">
+          <div class="space-y-4">
+            <h4 class="font-display font-bold text-base text-ink flex items-center justify-between">
+              <span>Resumen del Pedido</span>
+              <span id="checkout-item-count" class="text-xs font-medium text-woodDark">0 prendas</span>
+            </h4>
+
+            <div id="checkout-summary-list" class="space-y-3 max-h-64 overflow-y-auto pr-1">
+              <!-- Items dinámicos -->
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-ink/10 space-y-2 text-xs">
+            <div class="flex justify-between text-ink/65">
+              <span>Subtotal</span>
+              <span id="chk-subtotal">$0.00</span>
+            </div>
+            <div class="flex justify-between text-ink/65">
+              <span>Envío asegurado</span>
+              <span id="chk-shipping">$0.00</span>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-ink/10">
+              <span class="text-sm font-bold text-ink">Total a pagar</span>
+              <span id="chk-total" class="font-display font-bold text-xl text-pine">$0.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 3: COMPROBANTE OFICIAL / FACTURA -->
+      <div id="checkout-step-3" class="hidden p-5 sm:p-8 space-y-6">
+        <div class="max-w-xl mx-auto rounded-3xl bg-warm border border-wood/30 p-6 sm:p-8 space-y-5">
+          <div class="flex items-start justify-between gap-4 pb-4 border-b border-ink/10">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full bg-pine text-white flex items-center justify-center text-lg font-bold">
+                ✓
+              </div>
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wider text-pine">Pago Aprobado</span>
+                <h4 class="font-display font-bold text-xl text-ink">Comprobante Oficial</h4>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="text-[10px] uppercase text-ink/50 block">Orden N°</span>
+              <span id="receipt-order-id" class="font-display font-bold text-sm text-woodDark">#DR-2026-000</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs bg-white p-4 rounded-2xl border border-ink/10">
+            <div>
+              <span class="text-ink/50 block">Cliente</span>
+              <strong id="receipt-customer" class="text-ink">—</strong>
+              <span id="receipt-email" class="text-ink/65 block mt-0.5">—</span>
+            </div>
+            <div>
+              <span class="text-ink/50 block">Entrega en</span>
+              <strong id="receipt-address" class="text-ink">—</strong>
+              <span id="receipt-date" class="text-ink/65 block mt-0.5">—</span>
+            </div>
+            <div class="sm:col-span-2 pt-2 border-t border-ink/5 flex items-center justify-between">
+              <span class="text-ink/55">Método de pago utilizado:</span>
+              <strong id="receipt-method" class="text-pine">—</strong>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <p class="text-xs font-semibold uppercase tracking-wider text-woodDark">Detalle de prendas</p>
+            <div id="receipt-items" class="space-y-2 text-xs">
+              <!-- Detalle dinámico -->
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-ink/10 flex items-center justify-between">
+            <span class="text-sm font-semibold text-ink">Total Pagado</span>
+            <span id="receipt-total" class="font-display font-bold text-2xl text-pine">$0.00</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onclick="copyReceiptText()"
+              class="py-3 px-4 rounded-full bg-white hover:bg-sand border border-ink/15 text-ink text-xs font-semibold transition-colors"
+            >
+              📋 Copiar / Descargar Recibo
+            </button>
+            <button
+              type="button"
+              onclick="closeCheckoutModal()"
+              class="py-3 px-4 rounded-full bg-pine hover:bg-pineLight text-white text-xs font-semibold transition-colors"
+            >
+              Seguir comprando
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal Registro / Inicio de Sesión y Perfil con Historial -->
+  <div id="auth-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-ink/55 backdrop-blur-xs">
+    <div class="relative w-full max-w-md max-h-[90vh] overflow-y-auto rounded-3xl bg-white border border-wood/30 p-6 sm:p-8 shadow-2xl">
+      <button
+        type="button"
+        onclick="closeAuthModal()"
+        aria-label="Cerrar ventana de cuenta"
+        class="absolute top-4 right-4 w-9 h-9 rounded-full bg-warm hover:bg-sand border border-ink/10 flex items-center justify-center text-ink text-xs"
+      >
+        ✕
+      </button>
+
+      <!-- Vista Invitado -->
+      <div id="auth-guest-view" class="space-y-5">
+        <div class="space-y-1">
+          <span class="text-xs font-semibold text-woodDark uppercase tracking-wider">Comunidad DARK ROOM</span>
+          <h3 class="font-display font-bold text-2xl text-ink">Tu cuenta</h3>
+        </div>
+
+        <div class="grid grid-cols-2 p-1 rounded-full bg-warm border border-ink/10">
+          <button
+            id="tab-register-btn"
+            type="button"
+            onclick="switchAuthTab('register')"
+            class="py-2 rounded-full text-xs font-semibold bg-pine text-white transition-all"
+          >
+            Registrarse
+          </button>
+          <button
+            id="tab-login-btn"
+            type="button"
+            onclick="switchAuthTab('login')"
+            class="py-2 rounded-full text-xs font-semibold text-ink/70 hover:text-ink transition-all"
+          >
+            Iniciar sesión
+          </button>
+        </div>
+
+        <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-3.5">
+          <div id="auth-name-wrapper">
+            <label for="auth-name" class="block text-xs font-medium text-ink/75 mb-1">Nombre completo *</label>
+            <input
+              id="auth-name"
+              type="text"
+              required
+              placeholder="Ej. Valeria Méndez"
+              class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none transition-colors"
+            />
+          </div>
+
+          <div>
+            <label for="auth-email" class="block text-xs font-medium text-ink/75 mb-1">Correo electrónico *</label>
+            <input
+              id="auth-email"
+              type="email"
+              required
+              placeholder="tu@correo.com"
+              class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none transition-colors"
+            />
+          </div>
+
+          <div id="auth-address-wrapper">
+            <label for="auth-address" class="block text-xs font-medium text-ink/75 mb-1">Ciudad y dirección (opcional para envíos rápidos)</label>
+            <input
+              id="auth-address"
+              type="text"
+              placeholder="Ej. Caracas, Las Mercedes"
+              class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none transition-colors"
+            />
+          </div>
+
+          <div>
+            <label for="auth-password" class="block text-xs font-medium text-ink/75 mb-1">Contraseña *</label>
+            <input
+              id="auth-password"
+              type="password"
+              required
+              minlength="6"
+              placeholder="Mínimo 6 caracteres"
+              class="w-full px-4 py-2.5 rounded-2xl bg-warm focus:bg-white border border-ink/15 focus:border-pine text-sm text-ink outline-none transition-colors"
+            />
+          </div>
+
+          <button
+            id="auth-submit-btn"
+            type="submit"
+            class="w-full py-3.5 rounded-full bg-pine hover:bg-pineLight text-white text-sm font-semibold transition-all shadow-sm active:scale-95 mt-1"
+          >
+            Crear cuenta
+          </button>
+        </form>
+      </div>
+
+      <!-- Vista Miembro Logueado -->
+      <div id="auth-member-view" class="hidden space-y-5 py-1">
+        <div class="flex items-center gap-3.5 pb-4 border-b border-ink/10">
+          <div class="w-14 h-14 rounded-full bg-pine text-white flex items-center justify-center font-display font-bold text-lg shrink-0">
+            <span id="member-initials">DR</span>
+          </div>
+          <div class="min-w-0">
+            <span class="text-[11px] font-semibold text-woodDark uppercase tracking-wider">Miembro DARK ROOM</span>
+            <h3 id="member-name" class="font-display font-bold text-xl text-ink truncate">Usuario</h3>
+            <p id="member-email" class="text-xs text-ink/60 truncate">usuario@correo.com</p>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-pine">Historial de Pedidos</h4>
+            <span id="member-orders-count" class="text-[11px] text-ink/55">0 pedidos</span>
+          </div>
+          <div id="member-orders-list" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+            <!-- Historial dinámico -->
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onclick="logoutUser()"
+          class="w-full py-3 rounded-full bg-warm hover:bg-sand border border-ink/15 text-ink text-xs font-semibold transition-colors"
+        >
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificación Toast Flotante -->
+  <div
+    id="toast-msg"
+    class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-full bg-pine text-white text-xs font-semibold shadow-lg opacity-0 pointer-events-none transition-all duration-300 whitespace-nowrap border border-white/15"
+  >
+    Agregado al carrito
+  </div>
+
+  <script>
+    // --- CATÁLOGO CURADO CON COHERENCIA VISUAL TOTAL, VARIEDAD DE COLORES Y TALLAS ---
+    const catalog = [
+      // SUÉTERES (4 PIEZAS)
+      {
+        id: 'sueter-01',
+        name: 'Hoodie Verde Pino',
+        category: 'sueteres',
+        categoryLabel: 'Suéter',
+        price: 68,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: '100% Algodón orgánico de alto gramaje (420 GSM)',
+        fit: 'Corte relajado unisex con capucha doble y bolsillo canguro',
+        description: 'Sudadera con capucha en tono verde oliva/pino profundo con acabado suave lavado y puños acanalados resistentes.',
+        image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Verde Pino', hex: '#1F3A2E', tint: 'none', filter: 'none' },
+          { name: 'Negro Antracita', hex: '#141413', tint: 'rgba(20, 20, 19, 0.35)', filter: 'grayscale(85%) brightness(0.65)' },
+          { name: 'Tono Madera', hex: '#A67B5B', tint: 'rgba(166, 123, 91, 0.25)', filter: 'sepia(45%) saturate(1.15) brightness(0.95)' }
+        ]
+      },
+      {
+        id: 'sueter-02',
+        name: 'Suéter Tejido Blanco Hueso',
+        category: 'sueteres',
+        categoryLabel: 'Suéter',
+        price: 64,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Punto acanalado 100% algodón peinado suave (380 GSM)',
+        fit: 'Silueta limpia con cuello redondo estructurado',
+        description: 'Suéter de punto grueso en blanco hueso cálido, respirable y ideal para usar solo o en capas.',
+        image: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Blanco Hueso', hex: '#FAF8F5', tint: 'none', filter: 'none' },
+          { name: 'Arena Tostada', hex: '#D8C7B2', tint: 'rgba(166, 123, 91, 0.22)', filter: 'sepia(35%) brightness(0.93)' },
+          { name: 'Verde Salvia', hex: '#4B6356', tint: 'rgba(31, 58, 46, 0.28)', filter: 'hue-rotate(65deg) saturate(1.2) brightness(0.85)' }
+        ]
+      },
+      {
+        id: 'sueter-03',
+        name: 'Crewneck Crudo Minimal',
+        category: 'sueteres',
+        categoryLabel: 'Suéter',
+        price: 62,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Felpa francesa de algodón orgánico prelavado',
+        fit: 'Corte boxy relajado con hombros caídos',
+        description: 'Suéter cuello redondo en tono crudo natural sin estampados invasivos, diseñado para máxima versatilidad diaria.',
+        image: 'https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Crudo Natural', hex: '#EFECE6', tint: 'none', filter: 'none' },
+          { name: 'Madera Cálida', hex: '#A67B5B', tint: 'rgba(166, 123, 91, 0.3)', filter: 'sepia(50%) brightness(0.85)' },
+          { name: 'Carbón Suave', hex: '#2D2D2B', tint: 'rgba(20, 20, 19, 0.42)', filter: 'grayscale(90%) brightness(0.62)' }
+        ]
+      },
+      {
+        id: 'sueter-04',
+        name: 'Hoodie Negro Antracita',
+        category: 'sueteres',
+        categoryLabel: 'Suéter',
+        price: 70,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Felpa pesada 100% algodón lavado enzimático (440 GSM)',
+        fit: 'Corte cuadrado urbano estructurado',
+        description: 'Sudadera negra antracita con caída pesada y capucha amplia de doble panel para un look sobrio y limpio.',
+        image: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Negro Antracita', hex: '#141413', tint: 'none', filter: 'none' },
+          { name: 'Verde Bosque', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.35)', filter: 'sepia(30%) hue-rotate(85deg) brightness(1.05)' },
+          { name: 'Gris Piedra', hex: '#6E6D68', tint: 'rgba(239, 236, 230, 0.25)', filter: 'brightness(1.35) contrast(0.9)' }
+        ]
+      },
+
+      // CAMISAS (3 PIEZAS)
+      {
+        id: 'camisa-01',
+        name: 'Camisa Lino Blanca',
+        category: 'camisas',
+        categoryLabel: 'Camisa',
+        price: 62,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: '55% Lino europeo lavado, 45% Algodón respirable',
+        fit: 'Corte relajado de manga larga con cuello clásico',
+        description: 'Camisa blanca de lino y algodón ligero con textura natural fresca. Perfecta abotonada o abierta sobre camiseta.',
+        image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Blanco Puro', hex: '#FFFFFF', tint: 'none', filter: 'none' },
+          { name: 'Hueso Cálido', hex: '#EFECE6', tint: 'rgba(239, 236, 230, 0.28)', filter: 'sepia(18%) brightness(0.97)' },
+          { name: 'Verde Pino Claro', hex: '#2B4F3F', tint: 'rgba(31, 58, 46, 0.32)', filter: 'sepia(35%) hue-rotate(85deg) brightness(0.82)' }
+        ]
+      },
+      {
+        id: 'camisa-02',
+        name: 'Camisa Oxford Negra',
+        category: 'camisas',
+        categoryLabel: 'Camisa',
+        price: 58,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Tejido Oxford 100% algodón peinado mate',
+        fit: 'Corte recto moderno con botones al tono',
+        description: 'Camisa negra de manga larga en tejido Oxford suave que mantiene su estructura todo el día sin perder comodidad.',
+        image: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Negro Mate', hex: '#141413', tint: 'none', filter: 'none' },
+          { name: 'Verde Pino', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.35)', filter: 'sepia(35%) hue-rotate(85deg) brightness(1.05)' },
+          { name: 'Café Madera', hex: '#8C6239', tint: 'rgba(166, 123, 91, 0.32)', filter: 'sepia(55%) brightness(1.05)' }
+        ]
+      },
+      {
+        id: 'camisa-03',
+        name: 'Camisa Casual Cuadros Tierra',
+        category: 'camisas',
+        categoryLabel: 'Camisa',
+        price: 56,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Franela ligera de algodón cepillado suave',
+        fit: 'Silueta relajada estilo sobrecamisa ligera',
+        description: 'Camisa de textura suave en tonos tierra y neutros, pensada para combinarse fácilmente con pantalones rectos o cargo.',
+        image: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Tierra & Arena', hex: '#A67B5B', tint: 'none', filter: 'none' },
+          { name: 'Pino & Crema', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.25)', filter: 'hue-rotate(85deg) saturate(1.15)' },
+          { name: 'Monocromo Negro', hex: '#262624', tint: 'rgba(20, 20, 19, 0.25)', filter: 'grayscale(95%) brightness(0.85)' }
+        ]
+      },
+
+      // PANTALONES (4 PIEZAS)
+      {
+        id: 'pantalon-01',
+        name: 'Cargo Utilitario Arena',
+        category: 'pantalones',
+        categoryLabel: 'Pantalón',
+        price: 76,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Sarga de algodón resistente de tacto suave (310 GSM)',
+        fit: 'Pierna relajada con bolsillos cargo laterales depurados',
+        description: 'Pantalón cargo en tono beige arena claro con bolsillos laterales funcionales y caída recta cómoda.',
+        image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Arena Claro', hex: '#DFD5C5', tint: 'none', filter: 'none' },
+          { name: 'Verde Pino', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.35)', filter: 'sepia(35%) hue-rotate(85deg) brightness(0.72)' },
+          { name: 'Negro Antracita', hex: '#141413', tint: 'rgba(20, 20, 19, 0.42)', filter: 'grayscale(95%) brightness(0.55)' }
+        ]
+      },
+      {
+        id: 'pantalon-02',
+        name: 'Chino Recto Negro',
+        category: 'pantalones',
+        categoryLabel: 'Pantalón',
+        price: 68,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: '98% Algodón peinado, 2% Elastano cómodo',
+        fit: 'Corte recto limpio hasta el tobillo',
+        description: 'Pantalón chino en negro antracita de corte equilibrado, ideal tanto para zapatillas urbanas como botas.',
+        image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Negro Antracita', hex: '#141413', tint: 'none', filter: 'none' },
+          { name: 'Tono Madera', hex: '#A67B5B', tint: 'rgba(166, 123, 91, 0.32)', filter: 'sepia(55%) brightness(1.15)' },
+          { name: 'Hueso Cálido', hex: '#EFECE6', tint: 'rgba(239, 236, 230, 0.3)', filter: 'brightness(1.45) contrast(0.88)' }
+        ]
+      },
+      {
+        id: 'pantalon-03',
+        name: 'Pantalón Relaxed Verde Oliva',
+        category: 'pantalones',
+        categoryLabel: 'Pantalón',
+        price: 78,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Gabardina fluida de algodón orgánico lavado',
+        fit: 'Pierna amplia relajada con cintura cómoda',
+        description: 'Pantalón de caída amplia en verde oliva/pino con acabado suave y diseño limpio sin exceso de costuras.',
+        image: 'https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Verde Oliva / Pino', hex: '#2B4F3F', tint: 'none', filter: 'none' },
+          { name: 'Arena Suave', hex: '#DFD5C5', tint: 'rgba(239, 236, 230, 0.28)', filter: 'sepia(30%) brightness(1.25)' },
+          { name: 'Negro Carbón', hex: '#141413', tint: 'rgba(20, 20, 19, 0.38)', filter: 'grayscale(95%) brightness(0.65)' }
+        ]
+      },
+      {
+        id: 'pantalon-04',
+        name: 'Denim Recto Lavado',
+        category: 'pantalones',
+        categoryLabel: 'Pantalón',
+        price: 74,
+        sizes: ['XS', 'S', 'M', 'L', 'XL'],
+        fabric: 'Denim rígido 100% algodón de 13 oz suavizado',
+        fit: 'Corte recto clásico estilo años 90',
+        description: 'Vaquero de corte recto atemporal con lavado medio equilibrado, resistente y diseñado para envejecer bien.',
+        image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Índigo Lavado', hex: '#4A607A', tint: 'none', filter: 'none' },
+          { name: 'Negro Lavado', hex: '#222220', tint: 'rgba(20, 20, 19, 0.38)', filter: 'grayscale(95%) brightness(0.68)' },
+          { name: 'Crudo Natural', hex: '#EFECE6', tint: 'rgba(239, 236, 230, 0.35)', filter: 'grayscale(80%) brightness(1.38)' }
+        ]
+      },
+
+      // ACCESORIOS (4 PIEZAS: GORROS, GORRA, SOMBRERO Y MEDIAS)
+      {
+        id: 'acc-01',
+        name: 'Beanie Tejido Acanalado',
+        category: 'accesorios',
+        categoryLabel: 'Gorro',
+        price: 24,
+        sizes: ['Talla Única'],
+        fabric: '100% Algodón tejido de punto elástico suave',
+        fit: 'Ajuste adaptable con doblez clásico',
+        description: 'Gorro tejido tipo beanie de punto acanalado suave que mantiene la forma y complementa cualquier look urbano.',
+        image: 'https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Negro Antracita', hex: '#141413', tint: 'none', filter: 'none' },
+          { name: 'Verde Pino', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.38)', filter: 'sepia(35%) hue-rotate(85deg) brightness(1.05)' },
+          { name: 'Tono Madera', hex: '#A67B5B', tint: 'rgba(166, 123, 91, 0.35)', filter: 'sepia(55%) brightness(1.12)' }
+        ]
+      },
+      {
+        id: 'acc-02',
+        name: 'Gorra Dad Cap Algodón',
+        category: 'accesorios',
+        categoryLabel: 'Gorra',
+        price: 28,
+        sizes: ['Ajustable'],
+        fabric: 'Sarga de algodón lavado con hebilla metálica',
+        fit: '6 paneles con visera curva y correa regulable',
+        description: 'Gorra clásica de 6 paneles en algodón lavado suave con cierre trasero ajustable.',
+        image: 'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Negro Lavado', hex: '#141413', tint: 'none', filter: 'none' },
+          { name: 'Verde Pino', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.38)', filter: 'sepia(35%) hue-rotate(85deg) brightness(1.08)' },
+          { name: 'Arena / Madera', hex: '#A67B5B', tint: 'rgba(166, 123, 91, 0.32)', filter: 'sepia(50%) brightness(1.18)' }
+        ]
+      },
+      {
+        id: 'acc-03',
+        name: 'Sombrero Bucket Hat',
+        category: 'accesorios',
+        categoryLabel: 'Sombrero',
+        price: 32,
+        sizes: ['S/M', 'L/XL'],
+        fabric: 'Lona de algodón natural de peso medio',
+        fit: 'Ala flexible con costuras reforzadas',
+        description: 'Sombrero tipo bucket hat ligero y plegable, ideal para proteger del sol con estética limpia y minimalista.',
+        image: 'https://images.unsplash.com/photo-1556306535-0f09a537f0a3?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Crudo / Hueso', hex: '#FAF8F5', tint: 'none', filter: 'none' },
+          { name: 'Verde Pino', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.35)', filter: 'sepia(35%) hue-rotate(85deg) brightness(0.75)' },
+          { name: 'Negro Antracita', hex: '#141413', tint: 'rgba(20, 20, 19, 0.42)', filter: 'grayscale(95%) brightness(0.58)' }
+        ]
+      },
+      {
+        id: 'acc-04',
+        name: 'Pack 3 Medias Ribbed',
+        category: 'accesorios',
+        categoryLabel: 'Medias',
+        price: 18,
+        sizes: ['36-40', '41-45'],
+        fabric: '82% Algodón peinado, 15% Poliamida, 3% Elastano',
+        fit: 'Caída media acanalada con planta acolchada',
+        description: 'Pack de 3 pares de calcetines acanalados de algodón suave con ajuste firme y talonera reforzada.',
+        image: 'https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?auto=format&fit=crop&w=800&q=80',
+        colors: [
+          { name: 'Surtido Tierra (Blanco, Pino, Madera)', hex: '#A67B5B', tint: 'none', filter: 'none' },
+          { name: 'Pack Blanco Puro', hex: '#FFFFFF', tint: 'rgba(255, 255, 255, 0.25)', filter: 'grayscale(80%) brightness(1.15)' },
+          { name: 'Pack Negro & Pino', hex: '#1F3A2E', tint: 'rgba(31, 58, 46, 0.35)', filter: 'grayscale(70%) brightness(0.65)' }
+        ]
+      }
+    ];
+
+    // --- ESTADO DE LA APLICACIÓN ---
+    let bag = [];
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let currentUser = null;
+    let authTab = 'register';
+    let selectedSizes = {};
+    let selectedColors = {};
+    let selectedPaymentMethod = 'card';
+    let orderHistory = [];
+    let lastReceipt = null;
+
+    catalog.forEach(item => {
+      selectedSizes[item.id] = item.sizes.includes('M') ? 'M' : item.sizes[0];
+      selectedColors[item.id] = 0;
+    });
+
+    // --- PERSISTENCIA ---
+    function loadSavedSession() {
+      try {
+        const savedUser = localStorage.getItem('dr_user');
+        const savedOrders = localStorage.getItem('dr_orders');
+        if (savedUser) currentUser = JSON.parse(savedUser);
+        if (savedOrders) orderHistory = JSON.parse(savedOrders);
+      } catch (err) {
+        console.warn('Almacenamiento local no disponible', err);
+      }
+    }
+
+    function saveSessionData() {
+      try {
+        if (currentUser) {
+          localStorage.setItem('dr_user', JSON.stringify(currentUser));
+        } else {
+          localStorage.removeItem('dr_user');
+        }
+        localStorage.setItem('dr_orders', JSON.stringify(orderHistory));
+      } catch (err) {
+        console.warn('No se pudo guardar la sesión', err);
+      }
+    }
+
+    // --- RENDERIZADO DEL CATÁLOGO ---
+    function renderCatalog() {
+      const grid = document.getElementById('catalog-grid');
+      const subtitle = document.getElementById('catalog-subtitle');
+      const query = searchQuery.trim().toLowerCase();
+
+      const filtered = catalog.filter(item => {
+        const matchesCat = currentFilter === 'all' || item.category === currentFilter;
+        const matchesColor = item.colors.some(c => c.name.toLowerCase().includes(query));
+        const matchesSize = item.sizes.some(s => s.toLowerCase() === query);
+        const matchesSearch = !query ||
+          item.name.toLowerCase().includes(query) ||
+          item.categoryLabel.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query) ||
+          matchesColor ||
+          matchesSize;
+        return matchesCat && matchesSearch;
+      });
+
+      if (query) {
+        subtitle.textContent = `${filtered.length} resultado(s) para "${searchQuery}"`;
+      } else {
+        subtitle.textContent = 'Selecciona el color y la talla de cada prenda antes de añadirla a tu carrito.';
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-14 px-6 rounded-3xl bg-warm border border-wood/20 text-center space-y-3">
+            <p class="font-display font-bold text-lg sm:text-xl text-ink">No encontramos prendas con "${searchQuery}"</p>
+            <p class="text-xs sm:text-sm text-ink/60">Prueba buscando por hoodie, camisa, cargo, beanie, medias o por color (verde pino, arena, negro).</p>
+            <button
+              type="button"
+              onclick="clearSearch(); filterCatalog('all');"
+              class="mt-1 px-5 py-2.5 rounded-full bg-pine text-white text-xs font-semibold hover:bg-pineLight transition-colors"
+            >
+              Ver todo el catálogo
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(item => {
+        const activeSize = selectedSizes[item.id];
+        const colorIdx = selectedColors[item.id] || 0;
+        const activeColor = item.colors[colorIdx];
+
+        return `
+          <article class="group rounded-3xl bg-white border border-ink/10 hover:border-wood/45 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:shadow-md">
+            <div>
+              <div
+                onclick="openProductModal('${item.id}')"
+                class="relative aspect-[4/5] bg-warm overflow-hidden cursor-pointer"
+              >
+                <img
+                  src="${item.image}"
+                  alt="${item.name} - ${activeColor.name}"
+                  style="filter: ${activeColor.filter};"
+                  onerror="this.src='https://placehold.co/600x750/FAF8F5/141413?text=${encodeURIComponent(item.name)}'"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
+                />
+                ${activeColor.tint !== 'none' ? `<div class="absolute inset-0 pointer-events-none transition-colors duration-300" style="background-color: ${activeColor.tint}; mix-blend-mode: multiply;"></div>` : ''}
+                <span class="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-xs text-[11px] font-semibold text-ink border border-ink/10">
+                  ${item.categoryLabel}
+                </span>
+                <button
+                  type="button"
+                  onclick="event.stopPropagation(); openProductModal('${item.id}')"
+                  class="absolute bottom-3 right-3 px-3 py-1.5 rounded-full bg-white/95 hover:bg-pine hover:text-white text-[11px] font-medium text-ink border border-ink/10 transition-colors shadow-xs"
+                >
+                  Vista rápida
+                </button>
+              </div>
+
+              <div class="p-4 sm:p-5 pb-3 space-y-2.5">
+                <div class="flex items-start justify-between gap-2">
+                  <h3
+                    onclick="openProductModal('${item.id}')"
+                    class="font-display font-bold text-base sm:text-lg text-ink leading-snug cursor-pointer hover:text-pine transition-colors"
+                  >
+                    ${item.name}
+                  </h3>
+                  <span class="font-semibold text-base text-woodDark shrink-0">$${item.price}</span>
+                </div>
+
+                <!-- Selector interactivo de colores -->
+                <div class="flex items-center justify-between gap-2 pt-0.5">
+                  <div class="flex items-center gap-1.5">
+                    ${item.colors.map((col, idx) => `
+                      <button
+                        type="button"
+                        title="${col.name}"
+                        aria-label="Color ${col.name}"
+                        onclick="pickColor('${item.id}', ${idx})"
+                        class="w-5 h-5 rounded-full border transition-all ${
+                          colorIdx === idx
+                            ? 'ring-2 ring-pine ring-offset-2 border-ink/40 scale-110'
+                            : 'border-ink/25 hover:scale-105'
+                        }"
+                        style="background-color: ${col.hex};"
+                      ></button>
+                    `).join('')}
+                  </div>
+                  <span class="text-[11px] font-medium text-ink/65 truncate max-w-[140px]">${activeColor.name}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4 sm:p-5 pt-2 space-y-3">
+              <!-- Selector de tallas completo -->
+              <div class="flex flex-wrap items-center gap-1.5">
+                ${item.sizes.map(size => `
+                  <button
+                    type="button"
+                    onclick="pickSize('${item.id}', '${size}')"
+                    class="${size.length > 2 ? 'px-3 h-8' : 'w-8 h-8'} rounded-full text-[11px] font-semibold transition-all ${
+                      activeSize === size
+                        ? 'bg-pine text-white shadow-xs'
+                        : 'bg-warm text-ink/80 hover:bg-sand border border-ink/10'
+                    }"
+                  >
+                    ${size}
+                  </button>
+                `).join('')}
+              </div>
+
+              <button
+                type="button"
+                onclick="addToBag('${item.id}')"
+                class="w-full py-3 rounded-full bg-ink hover:bg-pine active:scale-95 text-white text-xs sm:text-sm font-semibold transition-all"
+              >
+                + Añadir al carrito
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // --- CONTROLES DE FILTRO, BÚSQUEDA, TALLA Y COLOR ---
+    function filterCatalog(category) {
+      currentFilter = category;
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        if (btn.dataset.category === category) {
+          btn.classList.remove('bg-warm', 'text-ink', 'border', 'border-ink/10');
+          btn.classList.add('bg-pine', 'text-white');
+        } else {
+          btn.classList.add('bg-warm', 'text-ink', 'border', 'border-ink/10');
+          btn.classList.remove('bg-pine', 'text-white');
+        }
+      });
+      renderCatalog();
+    }
+
+    function selectCategoryFromMenu(category) {
+      setHamburgerMenu(false);
+      filterCatalog(category);
+      const section = document.getElementById('catalogo');
+      if (section) section.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleTopSearch() {
+      const bar = document.getElementById('top-search-bar');
+      bar.classList.toggle('hidden');
+      if (!bar.classList.contains('hidden')) {
+        document.getElementById('top-search-input').focus();
+      }
+    }
+
+    function handleSearch(val) {
+      searchQuery = val;
+      const topInput = document.getElementById('top-search-input');
+      const drawerInput = document.getElementById('drawer-search-input');
+      if (topInput && topInput.value !== val) topInput.value = val;
+      if (drawerInput && drawerInput.value !== val) drawerInput.value = val;
+      renderCatalog();
+    }
+
+    function clearSearch() {
+      searchQuery = '';
+      const topInput = document.getElementById('top-search-input');
+      const drawerInput = document.getElementById('drawer-search-input');
+      if (topInput) topInput.value = '';
+      if (drawerInput) drawerInput.value = '';
+      renderCatalog();
+    }
+
+    function pickSize(productId, size) {
+      selectedSizes[productId] = size;
+      renderCatalog();
+    }
+
+    function pickColor(productId, colorIndex) {
+      selectedColors[productId] = colorIndex;
+      renderCatalog();
+    }
+
+    // --- MENÚ HAMBURGUESA ---
+    function setHamburgerMenu(open) {
+      const drawer = document.getElementById('hamburger-drawer');
+      const backdrop = document.getElementById('menu-backdrop');
+      if (open) {
+        backdrop.classList.remove('hidden');
+        drawer.classList.remove('-translate-x-full');
+      } else {
+        backdrop.classList.add('hidden');
+        drawer.classList.add('-translate-x-full');
+      }
+    }
+
+    // --- MODAL DE VISTA RÁPIDA ---
+    function selectModalSize(productId, size) {
+      selectedSizes[productId] = size;
+      renderCatalog();
+      openProductModal(productId);
+    }
+
+    function selectModalColor(productId, colorIdx) {
+      selectedColors[productId] = colorIdx;
+      renderCatalog();
+      openProductModal(productId);
+    }
+
+    function openProductModal(productId) {
+      const item = catalog.find(p => p.id === productId);
+      if (!item) return;
+
+      const activeSize = selectedSizes[item.id];
+      const colorIdx = selectedColors[item.id] || 0;
+      const activeColor = item.colors[colorIdx];
+      const modal = document.getElementById('product-modal');
+      const body = document.getElementById('product-modal-body');
+
+      body.innerHTML = `
+        <div class="relative bg-warm aspect-square md:aspect-auto overflow-hidden">
+          <img
+            src="${item.image}"
+            alt="${item.name} - ${activeColor.name}"
+            style="filter: ${activeColor.filter};"
+            onerror="this.src='https://placehold.co/600x750/FAF8F5/141413?text=DARK+ROOM'"
+            class="w-full h-full object-cover transition-all duration-300"
+          />
+          ${activeColor.tint !== 'none' ? `<div class="absolute inset-0 pointer-events-none" style="background-color: ${activeColor.tint}; mix-blend-mode: multiply;"></div>` : ''}
+        </div>
+        <div class="p-6 sm:p-7 flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <span class="inline-block px-3 py-1 rounded-full bg-pine/10 text-pine text-xs font-semibold">
+              ${item.categoryLabel} • ${activeColor.name}
+            </span>
+            <h3 class="font-display font-bold text-2xl text-ink">${item.name}</h3>
+            <p class="font-semibold text-xl text-woodDark">$${item.price}.00 USD</p>
+            <p class="text-xs sm:text-sm text-ink/75 leading-relaxed pt-1">${item.description}</p>
+
+            <div class="p-3.5 rounded-2xl bg-warm border border-wood/20 space-y-2 text-xs">
+              <div>
+                <span class="font-semibold text-ink">Tela:</span>
+                <span class="text-ink/70"> ${item.fabric}</span>
+              </div>
+              <div>
+                <span class="font-semibold text-ink">Ajuste:</span>
+                <span class="text-ink/70"> ${item.fit}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Selector de Color en Modal -->
+            <div class="pt-3 border-t border-ink/10 space-y-2">
+              <span class="text-xs font-medium text-ink/65 block">Color: <strong class="text-ink">${activeColor.name}</strong></span>
+              <div class="flex flex-wrap items-center gap-2.5">
+                ${item.colors.map((col, idx) => `
+                  <button
+                    type="button"
+                    onclick="selectModalColor('${item.id}', ${idx})"
+                    class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                      colorIdx === idx
+                        ? 'bg-pine text-white border-pine'
+                        : 'bg-warm text-ink border-ink/10 hover:bg-sand'
+                    }"
+                  >
+                    <span class="w-3.5 h-3.5 rounded-full border border-white/40" style="background-color: ${col.hex};"></span>
+                    <span>${col.name}</span>
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Selector de Talla en Modal -->
+            <div class="space-y-2">
+              <span class="text-xs font-medium text-ink/65 block">Selecciona tu talla:</span>
+              <div class="flex flex-wrap gap-2">
+                ${item.sizes.map(size => `
+                  <button
+                    type="button"
+                    onclick="selectModalSize('${item.id}', '${size}')"
+                    class="${size.length > 2 ? 'px-3.5 h-9' : 'w-9 h-9'} rounded-full text-xs font-semibold transition-all ${
+                      activeSize === size
+                        ? 'bg-pine text-white'
+                        : 'bg-warm text-ink hover:bg-sand border border-ink/10'
+                    }"
+                  >
+                    ${size}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onclick="addToBag('${item.id}'); closeProductModal();"
+              class="w-full py-3.5 rounded-full bg-pine hover:bg-pineLight text-white text-sm font-semibold transition-colors"
+            >
+              + Añadir al carrito — $${item.price}
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProductModal() {
+      const modal = document.getElementById('product-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // --- LÓGICA DEL CARRITO ---
+    function setBagDrawer(open) {
+      const drawer = document.getElementById('bag-drawer');
+      const backdrop = document.getElementById('bag-backdrop');
+      if (open) {
+        backdrop.classList.remove('hidden');
+        drawer.classList.remove('translate-x-full');
+      } else {
+        backdrop.classList.add('hidden');
+        drawer.classList.add('translate-x-full');
+      }
+    }
+
+    function getCartTotals() {
+      const totalQty = bag.reduce((acc, item) => acc + item.qty, 0);
+      const subtotal = bag.reduce((acc, item) => acc + item.price * item.qty, 0);
+      const threshold = 100;
+      const shipping = subtotal === 0 || subtotal >= threshold ? 0 : 10;
+      const total = subtotal + shipping;
+      return { totalQty, subtotal, shipping, total, threshold };
+    }
+
+    function addToBag(productId) {
+      const product = catalog.find(p => p.id === productId);
+      if (!product) return;
+      const size = selectedSizes[productId] || product.sizes[0];
+      const colorIdx = selectedColors[productId] || 0;
+      const colorObj = product.colors[colorIdx];
+      const key = `${productId}__${size}__${colorObj.name}`;
+
+      const existing = bag.find(i => i.key === key);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        bag.push({
+          key,
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          filter: colorObj.filter,
+          tint: colorObj.tint,
+          colorName: colorObj.name,
+          colorHex: colorObj.hex,
+          size,
+          qty: 1
+        });
+      }
+
+      renderBag();
+      showToast(`✓ ${product.name} (${colorObj.name} • ${size}) añadido`);
+    }
+
+    function updateQty(key, delta) {
+      const idx = bag.findIndex(i => i.key === key);
+      if (idx === -1) return;
+      bag[idx].qty += delta;
+      if (bag[idx].qty <= 0) {
+        bag.splice(idx, 1);
+      }
+      renderBag();
+    }
+
+    function removeFromBag(key) {
+      bag = bag.filter(i => i.key !== key);
+      renderBag();
+    }
+
+    function renderBag() {
+      const countEl = document.getElementById('cart-count');
+      const listEl = document.getElementById('bag-items');
+      const subtotalEl = document.getElementById('bag-subtotal');
+      const shippingEl = document.getElementById('bag-shipping');
+      const totalEl = document.getElementById('bag-total');
+      const statusEl = document.getElementById('shipping-status');
+      const barEl = document.getElementById('shipping-bar');
+      const checkoutBtn = document.getElementById('checkout-btn');
+
+      const { totalQty, subtotal, shipping, total, threshold } = getCartTotals();
+
+      countEl.textContent = totalQty;
+      subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+      shippingEl.textContent = subtotal === 0 ? '$0.00' : (shipping === 0 ? 'GRATIS' : `$${shipping.toFixed(2)}`);
+      totalEl.textContent = `$${total.toFixed(2)}`;
+      checkoutBtn.disabled = bag.length === 0;
+
+      const pct = Math.min((subtotal / threshold) * 100, 100);
+      barEl.style.width = `${pct}%`;
+      if (subtotal >= threshold) {
+        statusEl.textContent = '✓ ¡Envío gratis desbloqueado!';
+      } else {
+        const diff = (threshold - subtotal).toFixed(2);
+        statusEl.textContent = `Agrega $${diff} más para obtener envío gratis`;
+      }
+
+      if (bag.length === 0) {
+        listEl.innerHTML = `
+          <div class="h-full flex flex-col items-center justify-center text-center py-12 space-y-3">
+            <div class="w-12 h-12 rounded-full bg-warm flex items-center justify-center text-woodDark">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+            </div>
+            <p class="font-semibold text-sm text-ink">Tu carrito está vacío</p>
+            <p class="text-xs text-ink/55 max-w-xs">Explora suéteres, camisas, pantalones y accesorios para empezar.</p>
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = bag.map(item => `
+        <div class="flex items-center gap-3.5 p-3.5 rounded-2xl bg-warm border border-ink/10">
+          <div class="relative w-16 h-20 rounded-xl overflow-hidden bg-sand shrink-0">
+            <img
+              src="${item.image}"
+              alt="${item.name}"
+              style="filter: ${item.filter || 'none'};"
+              onerror="this.src='https://placehold.co/120x150/FAF8F5/141413?text=D/R'"
+              class="w-full h-full object-cover"
+            />
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2">
+              <h4 class="font-semibold text-sm text-ink truncate">${item.name}</h4>
+              <button
+                type="button"
+                onclick="removeFromBag('${item.key}')"
+                aria-label="Eliminar prenda"
+                class="text-xs text-ink/40 hover:text-ink px-1"
+              >
+                ✕
+              </button>
+            </div>
+            <div class="flex items-center gap-1.5 text-xs text-ink/65 mt-0.5">
+              <span class="w-2.5 h-2.5 rounded-full border border-ink/20" style="background-color: ${item.colorHex};"></span>
+              <span>${item.colorName}</span>
+              <span>•</span>
+              <span>Talla: <strong class="text-pine">${item.size}</strong></span>
+            </div>
+            <div class="flex items-center justify-between mt-2.5">
+              <span class="text-sm font-semibold text-woodDark">$${(item.price * item.qty).toFixed(2)}</span>
+              <div class="flex items-center gap-2">
+                <button
+                  type="button"
+                  onclick="updateQty('${item.key}', -1)"
+                  class="w-7 h-7 rounded-full bg-white border border-ink/15 hover:border-ink flex items-center justify-center text-xs font-bold"
+                >
+                  −
+                </button>
+                <span class="text-xs font-semibold w-4 text-center">${item.qty}</span>
+                <button
+                  type="button"
+                  onclick="updateQty('${item.key}', 1)"
+                  class="w-7 h-7 rounded-full bg-white border border-ink/15 hover:border-ink flex items-center justify-center text-xs font-bold"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- PASARELA DE PAGO EN 3 PASOS ---
+    function openCheckoutModal() {
+      if (bag.length === 0) return;
+      setBagDrawer(false);
+      setCheckoutStep(1);
+
+      const guestBox = document.getElementById('guest-register-box');
+      const quickLoginBtn = document.getElementById('checkout-quick-login-btn');
+      if (currentUser) {
+        document.getElementById('ship-name').value = currentUser.name || '';
+        document.getElementById('ship-email').value = currentUser.email || '';
+        if (currentUser.address) {
+          document.getElementById('ship-address').value = currentUser.address;
+        }
+        guestBox.classList.add('hidden');
+        quickLoginBtn.classList.add('hidden');
+      } else {
+        guestBox.classList.remove('hidden');
+        quickLoginBtn.classList.remove('hidden');
+      }
+
+      renderCheckoutSummary();
+      const modal = document.getElementById('checkout-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeCheckoutModal() {
+      const modal = document.getElementById('checkout-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function setCheckoutStep(step) {
+      const step1 = document.getElementById('checkout-step-1');
+      const step2 = document.getElementById('checkout-step-2');
+      const processing = document.getElementById('checkout-processing');
+      const mainGrid = document.getElementById('checkout-main-grid');
+      const step3 = document.getElementById('checkout-step-3');
+
+      step1.classList.add('hidden');
+      step2.classList.add('hidden');
+      processing.classList.add('hidden');
+      step3.classList.add('hidden');
+      mainGrid.classList.remove('hidden');
+
+      [1, 2, 3].forEach(n => {
+        const dPill = document.getElementById(`step-pill-${n}`);
+        const mPill = document.getElementById(`mob-step-${n}`);
+        if (n === step) {
+          dPill.className = 'px-3.5 py-1.5 rounded-full bg-pine text-white';
+          mPill.className = 'py-2 bg-pine text-white';
+        } else if (n < step) {
+          dPill.className = 'px-3.5 py-1.5 rounded-full bg-pine/15 text-pine';
+          mPill.className = 'py-2 bg-pine/15 text-pine';
+        } else {
+          dPill.className = 'px-3.5 py-1.5 rounded-full bg-warm text-ink/55 border border-ink/10';
+          mPill.className = 'py-2 text-ink/55';
+        }
+      });
+
+      if (step === 1) step1.classList.remove('hidden');
+      if (step === 2) step2.classList.remove('hidden');
+      if (step === 3) {
+        mainGrid.classList.add('hidden');
+        step3.classList.remove('hidden');
+      }
+    }
+
+    function toggleInlinePasswordField(checked) {
+      const box = document.getElementById('inline-password-box');
+      const input = document.getElementById('ship-password');
+      if (checked) {
+        box.classList.remove('hidden');
+        input.required = true;
+      } else {
+        box.classList.add('hidden');
+        input.required = false;
+      }
+    }
+
+    function renderCheckoutSummary() {
+      const { totalQty, subtotal, shipping, total } = getCartTotals();
+      document.getElementById('checkout-item-count').textContent = `${totalQty} prenda(s)`;
+      document.getElementById('chk-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+      document.getElementById('chk-shipping').textContent = shipping === 0 ? 'GRATIS' : `$${shipping.toFixed(2)}`;
+      document.getElementById('chk-total').textContent = `$${total.toFixed(2)}`;
+
+      document.querySelectorAll('.checkout-pay-amount').forEach(el => {
+        el.textContent = `$${total.toFixed(2)} USD`;
+      });
+
+      const list = document.getElementById('checkout-summary-list');
+      list.innerHTML = bag.map(item => `
+        <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-white border border-ink/10">
+          <img
+            src="${item.image}"
+            alt="${item.name}"
+            style="filter: ${item.filter || 'none'};"
+            onerror="this.src='https://placehold.co/80x100/FAF8F5/141413?text=D/R'"
+            class="w-12 h-14 rounded-xl object-cover bg-sand shrink-0"
+          />
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-semibold text-ink truncate">${item.name}</p>
+            <p class="text-[11px] text-ink/60">${item.colorName} • Talla ${item.size} • Cant: ${item.qty}</p>
+          </div>
+          <span class="text-xs font-bold text-woodDark">$${(item.price * item.qty).toFixed(2)}</span>
+        </div>
+      `).join('');
+    }
+
+    function goToPaymentStep(e) {
+      e.preventDefault();
+      const name = document.getElementById('ship-name').value.trim();
+      const email = document.getElementById('ship-email').value.trim();
+      const city = document.getElementById('ship-city').value.trim();
+      const address = document.getElementById('ship-address').value.trim();
+      const createAccount = document.getElementById('ship-create-account').checked;
+
+      if (!currentUser && createAccount) {
+        currentUser = {
+          name,
+          email,
+          address: `${city}, ${address}`
+        };
+        saveSessionData();
+        updateAuthUI();
+        showToast(`✓ Cuenta creada para ${name.split(' ')[0]}`);
+      } else if (currentUser && !currentUser.address) {
+        currentUser.address = `${city}, ${address}`;
+        saveSessionData();
+      }
+
+      const cardHolder = document.getElementById('card-holder');
+      if (cardHolder && !cardHolder.value) {
+        cardHolder.value = name;
+        updateCardPreviewName(name);
+      }
+
+      setCheckoutStep(2);
+    }
+
+    function backToShippingStep() {
+      setCheckoutStep(1);
+    }
+
+    function selectPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      document.querySelectorAll('.pay-tab').forEach(btn => {
+        if (btn.dataset.pay === method) {
+          btn.className = 'pay-tab py-3 px-2 rounded-2xl bg-pine text-white text-xs font-semibold border border-pine flex flex-col items-center gap-1 transition-all';
+        } else {
+          btn.className = 'pay-tab py-3 px-2 rounded-2xl bg-warm hover:bg-sand text-ink text-xs font-semibold border border-ink/10 flex flex-col items-center gap-1 transition-all';
+        }
+      });
+
+      document.getElementById('pay-form-card').classList.toggle('hidden', method !== 'card');
+      document.getElementById('pay-form-pagomovil').classList.toggle('hidden', method !== 'pagomovil');
+      document.getElementById('pay-form-zelle').classList.toggle('hidden', method !== 'zelle');
+    }
+
+    function formatCardNumber(input) {
+      let digits = input.value.replace(/\D/g, '').substring(0, 16);
+      let grouped = digits.replace(/(.{4})/g, '$1 ').trim();
+      input.value = grouped;
+      document.getElementById('card-preview-number').textContent = grouped || '•••• •••• •••• ••••';
+    }
+
+    function updateCardPreviewName(val) {
+      document.getElementById('card-preview-name').textContent = val.trim() || 'TU NOMBRE AQUÍ';
+    }
+
+    function formatCardExp(input) {
+      let digits = input.value.replace(/\D/g, '').substring(0, 4);
+      if (digits.length >= 3) {
+        input.value = `${digits.substring(0, 2)}/${digits.substring(2)}`;
+      } else {
+        input.value = digits;
+      }
+      document.getElementById('card-preview-exp').textContent = input.value || 'MM/AA';
+    }
+
+    function processFinalPayment(e) {
+      e.preventDefault();
+
+      document.getElementById('checkout-step-2').classList.add('hidden');
+      document.getElementById('checkout-processing').classList.remove('hidden');
+
+      const customerName = document.getElementById('ship-name').value.trim();
+      const customerEmail = document.getElementById('ship-email').value.trim();
+      const city = document.getElementById('ship-city').value.trim();
+      const address = document.getElementById('ship-address').value.trim();
+      const fullAddress = `${city} — ${address}`;
+
+      let paymentLabel = 'Tarjeta de Crédito / Débito';
+      if (selectedPaymentMethod === 'card') {
+        const cardNum = document.getElementById('card-number').value.replace(/\s/g, '');
+        const last4 = cardNum.slice(-4) || '0000';
+        paymentLabel = `Tarjeta terminada en •••• ${last4}`;
+      } else if (selectedPaymentMethod === 'pagomovil') {
+        const bank = document.getElementById('pm-bank').value.trim();
+        const ref = document.getElementById('pm-ref').value.trim();
+        paymentLabel = `Pago Móvil (${bank}) • Ref #${ref}`;
+      } else if (selectedPaymentMethod === 'zelle') {
+        const ref = document.getElementById('zelle-ref').value.trim();
+        paymentLabel = `Zelle / PayPal • ID #${ref}`;
+      }
+
+      const { subtotal, shipping, total } = getCartTotals();
+      const orderNum = `#DR-2026-${Math.floor(100 + Math.random() * 900)}`;
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString('es-ES', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const orderRecord = {
+        id: orderNum,
+        date: formattedDate,
+        customer: customerName,
+        email: customerEmail,
+        address: fullAddress,
+        method: paymentLabel,
+        items: bag.map(i => ({ ...i })),
+        subtotal,
+        shipping,
+        total
+      };
+
+      setTimeout(() => {
+        lastReceipt = orderRecord;
+        orderHistory.unshift(orderRecord);
+        saveSessionData();
+
+        document.getElementById('receipt-order-id').textContent = orderRecord.id;
+        document.getElementById('receipt-customer').textContent = orderRecord.customer;
+        document.getElementById('receipt-email').textContent = orderRecord.email;
+        document.getElementById('receipt-address').textContent = orderRecord.address;
+        document.getElementById('receipt-date').textContent = orderRecord.date;
+        document.getElementById('receipt-method').textContent = orderRecord.method;
+        document.getElementById('receipt-total').textContent = `$${orderRecord.total.toFixed(2)} USD`;
+
+        document.getElementById('receipt-items').innerHTML = orderRecord.items.map(i => `
+          <div class="flex items-center justify-between p-2.5 rounded-xl bg-white border border-ink/5">
+            <span><strong>${i.qty}x</strong> ${i.name} <span class="text-ink/55">(${i.colorName} • Talla ${i.size})</span></span>
+            <span class="font-semibold text-ink">$${(i.price * i.qty).toFixed(2)}</span>
+          </div>
+        `).join('');
+
+        bag = [];
+        renderBag();
+        updateAuthUI();
+        setCheckoutStep(3);
+        showToast('✓ ¡Pago confirmado! Pedido guardado');
+      }, 1100);
+    }
+
+    function copyTextToClipboard(text, message) {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        showToast(`✓ ${message}`);
+      } catch (err) {
+        showToast('No se pudo copiar');
+      }
+      document.body.removeChild(textarea);
+    }
+
+    function copyReceiptText() {
+      if (!lastReceipt) return;
+      const lines = [
+        `COMPROBANTE OFICIAL — DARK ROOM STREETWEAR`,
+        `Orden: ${lastReceipt.id}`,
+        `Fecha: ${lastReceipt.date}`,
+        `Cliente: ${lastReceipt.customer} (${lastReceipt.email})`,
+        `Envío: ${lastReceipt.address}`,
+        `Método de pago: ${lastReceipt.method}`,
+        `----------------------------------------`,
+        ...lastReceipt.items.map(i => `${i.qty}x ${i.name} [${i.colorName} / ${i.size}] - $${(i.price * i.qty).toFixed(2)}`),
+        `----------------------------------------`,
+        `TOTAL PAGADO: $${lastReceipt.total.toFixed(2)} USD`
+      ].join('\n');
+
+      copyTextToClipboard(lines, 'Recibo copiado al portapapeles');
+    }
+
+    // --- REGISTRO / CUENTA ---
+    function openAuthModal(defaultTab = 'register') {
+      if (!currentUser) {
+        switchAuthTab(defaultTab);
+      }
+      updateAuthUI();
+      const modal = document.getElementById('auth-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('auth-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function switchAuthTab(tab) {
+      authTab = tab;
+      const loginBtn = document.getElementById('tab-login-btn');
+      const registerBtn = document.getElementById('tab-register-btn');
+      const nameWrapper = document.getElementById('auth-name-wrapper');
+      const addressWrapper = document.getElementById('auth-address-wrapper');
+      const nameInput = document.getElementById('auth-name');
+      const submitBtn = document.getElementById('auth-submit-btn');
+
+      if (tab === 'login') {
+        loginBtn.classList.add('bg-pine', 'text-white');
+        loginBtn.classList.remove('text-ink/70');
+        registerBtn.classList.remove('bg-pine', 'text-white');
+        registerBtn.classList.add('text-ink/70');
+        nameWrapper.classList.add('hidden');
+        addressWrapper.classList.add('hidden');
+        nameInput.required = false;
+        submitBtn.textContent = 'Iniciar sesión';
+      } else {
+        registerBtn.classList.add('bg-pine', 'text-white');
+        registerBtn.classList.remove('text-ink/70');
+        loginBtn.classList.remove('bg-pine', 'text-white');
+        loginBtn.classList.add('text-ink/70');
+        nameWrapper.classList.remove('hidden');
+        addressWrapper.classList.remove('hidden');
+        nameInput.required = true;
+        submitBtn.textContent = 'Crear cuenta';
+      }
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value.trim();
+      const rawName = document.getElementById('auth-name').value.trim();
+      const address = document.getElementById('auth-address').value.trim();
+
+      const baseName = authTab === 'register' && rawName
+        ? rawName
+        : email.split('@')[0].replace(/[._-]/g, ' ');
+
+      const formattedName = baseName
+        .split(' ')
+        .filter(Boolean)
+        .map(w => w[0].toUpperCase() + w.slice(1))
+        .join(' ');
+
+      currentUser = {
+        name: formattedName || 'Cliente',
+        email,
+        address
+      };
+
+      saveSessionData();
+      updateAuthUI();
+      closeAuthModal();
+      showToast(`✓ Hola, ${currentUser.name.split(' ')[0]}`);
+
+      const checkoutModal = document.getElementById('checkout-modal');
+      if (!checkoutModal.classList.contains('hidden')) {
+        document.getElementById('ship-name').value = currentUser.name;
+        document.getElementById('ship-email').value = currentUser.email;
+        if (currentUser.address) document.getElementById('ship-address').value = currentUser.address;
+        document.getElementById('guest-register-box').classList.add('hidden');
+        document.getElementById('checkout-quick-login-btn').classList.add('hidden');
+      }
+    }
+
+    function logoutUser() {
+      currentUser = null;
+      saveSessionData();
+      document.getElementById('auth-form').reset();
+      updateAuthUI();
+      closeAuthModal();
+      showToast('Sesión cerrada');
+    }
+
+    function updateAuthUI() {
+      const headerLabel = document.getElementById('header-user-label');
+      const headerBtn = document.getElementById('header-user-btn');
+      const drawerUserInfo = document.getElementById('drawer-user-info');
+      const drawerUserName = document.getElementById('drawer-user-name');
+      const drawerAuthLabel = document.getElementById('drawer-auth-label');
+      const guestView = document.getElementById('auth-guest-view');
+      const memberView = document.getElementById('auth-member-view');
+
+      if (currentUser) {
+        const firstName = currentUser.name.split(' ')[0];
+        headerLabel.textContent = `Hola, ${firstName}`;
+        headerBtn.classList.remove('bg-warm');
+        headerBtn.classList.add('bg-pine/10', 'border-pine/30', 'text-pine');
+
+        drawerUserInfo.classList.remove('hidden');
+        drawerUserName.textContent = currentUser.name;
+        drawerAuthLabel.textContent = 'Mi Perfil y Pedidos';
+
+        guestView.classList.add('hidden');
+        memberView.classList.remove('hidden');
+        document.getElementById('member-name').textContent = currentUser.name;
+        document.getElementById('member-email').textContent = currentUser.email;
+        const initials = currentUser.name
+          .split(' ')
+          .slice(0, 2)
+          .map(p => p[0])
+          .join('')
+          .toUpperCase();
+        document.getElementById('member-initials').textContent = initials || 'DR';
+
+        const ordersCount = document.getElementById('member-orders-count');
+        const ordersList = document.getElementById('member-orders-list');
+        ordersCount.textContent = `${orderHistory.length} pedido(s)`;
+
+        if (orderHistory.length === 0) {
+          ordersList.innerHTML = `
+            <div class="p-4 rounded-2xl bg-warm border border-ink/10 text-center text-xs text-ink/60">
+              Aún no tienes pedidos realizados. ¡Explora el catálogo y estrena tu primera pieza!
+            </div>
+          `;
+        } else {
+          ordersList.innerHTML = orderHistory.map(ord => `
+            <div class="p-3.5 rounded-2xl bg-warm border border-wood/25 space-y-1.5 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-display font-bold text-pine">${ord.id}</span>
+                <span class="font-bold text-woodDark">$${ord.total.toFixed(2)}</span>
+              </div>
+              <p class="text-[11px] text-ink/60">${ord.date} • ${ord.method}</p>
+              <p class="text-[11px] text-ink/80 truncate">
+                ${ord.items.map(i => `${i.qty}x ${i.name} (${i.colorName}, ${i.size})`).join(', ')}
+              </p>
+            </div>
+          `).join('');
+        }
+      } else {
+        headerLabel.textContent = 'Registrarse';
+        headerBtn.classList.add('bg-warm');
+        headerBtn.classList.remove('bg-pine/10', 'border-pine/30', 'text-pine');
+
+        drawerUserInfo.classList.add('hidden');
+        drawerAuthLabel.textContent = 'Crear cuenta / Iniciar sesión';
+
+        guestView.classList.remove('hidden');
+        memberView.classList.add('hidden');
+      }
+    }
+
+    // --- TOAST ---
+    let toastTimer = null;
+    function showToast(text) {
+      const toast = document.getElementById('toast-msg');
+      toast.textContent = text;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2400);
+    }
+
+    // --- INICIALIZACIÓN ---
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSavedSession();
+      renderCatalog();
+      renderBag();
+      updateAuthUI();
+
+      document.getElementById('product-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'product-modal') closeProductModal();
+      });
+
+      document.getElementById('auth-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'auth-modal') closeAuthModal();
+      });
+    });
+  </script>
+</body>
+</html>
